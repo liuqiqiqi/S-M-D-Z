@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.guojiayikao.App.dao.RoomDao">
+
+    <resultMap type="com.guojiayikao.App.entity.Room" id="RoomMap">
+        <result property="roomid" column="roomId" jdbcType="INTEGER"/>
+        <result property="roomtype" column="roomType" jdbcType="VARCHAR"/>
+        <result property="roomprice" column="roomPrice" jdbcType="INTEGER"/>
+        <result property="roomstock" column="roomStock" jdbcType="INTEGER"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="RoomMap">
+        select
+          roomId, roomType, roomPrice, roomStock, image, remark
+        from hotelbook.room
+        where roomId = #{roomid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="RoomMap">
+        select
+          roomId, roomType, roomPrice, roomStock, image, remark
+        from hotelbook.room
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="RoomMap">
+        select
+        roomId, roomType, roomPrice, roomStock, image, remark
+        from hotelbook.room
+        <where>
+            <if test="roomid != null">
+                and roomId = #{roomid}
+            </if>
+            <if test="roomtype != null and roomtype != ''">
+                and roomType = #{roomtype}
+            </if>
+            <if test="roomprice != null">
+                and roomPrice = #{roomprice}
+            </if>
+            <if test="roomstock != null">
+                and roomStock = #{roomstock}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="roomid" useGeneratedKeys="true">
+        insert into hotelbook.room(roomType, roomPrice, roomStock, image, remark)
+        values (#{roomtype}, #{roomprice}, #{roomstock}, #{image}, #{remark})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update hotelbook.room
+        <set>
+            <if test="roomtype != null and roomtype != ''">
+                roomType = #{roomtype},
+            </if>
+            <if test="roomprice != null">
+                roomPrice = #{roomprice},
+            </if>
+            <if test="roomstock != null">
+                roomStock = #{roomstock},
+            </if>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+        </set>
+        where roomId = #{roomid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from hotelbook.room where roomId = #{roomid}
+    </delete>
+
+</mapper>

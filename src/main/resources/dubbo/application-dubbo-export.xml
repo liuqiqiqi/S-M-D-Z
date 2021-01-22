@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    					http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://code.alibabatech.com/schema/dubbo
+    					http://souche.oss-cn-hangzhou.aliyuncs.com/files/dubbo/dubbo.xsd">
+
+    <!-- 声明需要暴露的服务接口 ，我们选一个例子来，需要在接口的实现类上加@service+名称即ref里面那个-->
+    <dubbo:service interface="com.guojiayikao.App.service.RoomService" ref="roomService" />
+
+
+</beans>
